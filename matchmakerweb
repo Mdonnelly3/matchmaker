@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">    
+<head>
+    <meta charset="UTF-8">
+    <title>Matchmaker Web</title>
+</head>
+
+<body style="background-color: rgb(247, 214, 227);"></body>
+<body>
+    <h1 style='font-family:Verdana, Geneva, Tahoma, sans-serif ; color: white;'> Matchmaker &#127800 </h1>
+    <p> This program figures out if you and I will get along. I will ask you to answer 5 questions. To each question, answer 5 if you strongly agree, 4 if you agree, 
+        3 if you neither agree nor disagree, 2 if you disagree, and 1 if you strongly disagree. </p>
+    <p>Im really out here looking for new friends sooo, dont let me down please! &#127800</p>
+    <hr size='7'color='White'>
+    <br /><br />
+    <!---reference for HTML option/ https://www.w3schools.com/tags/tag_option.asp  
+        make text cuter--->
+    
+    <label>Chicago White Sox is the objectively better team!</label><br />
+    <select id="q1">
+        <option value="5">Strongly Agree</option>
+        <option value="4">Agree</option>
+        <option value="3">Neither Agree nor Disagree</option>
+        <option value="2">Disagree</option>
+        <option value="1">Strongly Disagree</option>
+    </select>
+    <br /><br />
+
+    <label>Yellowstone is the best National Park!</label><br />
+    <select id="q2">
+        <option value="5">Strongly Agree</option>
+        <option value="4">Agree</option>
+        <option value="3">Neither Agree nor Disagree</option>
+        <option value="2">Disagree</option>
+        <option value="1">Strongly Disagree</option>
+    </select>
+    <br /><br />
+   
+    <label>Mint chocolate chip is the best flavor of ice cream.</label><br />
+    <select id="q3">
+        <option value="5">Strongly Agree</option>
+        <option value="4">Agree</option>
+        <option value="3">Neither Agree nor Disagree</option>
+        <option value="2">Disagree</option>
+        <option value="1">Strongly Disagree</option>
+    </select>
+    <br /><br />
+
+    <label>I prefer DC over Marvel comics</label><br />
+    <select id="q4">
+        <option value="5">Strongly Agree</option>
+        <option value="4">Agree</option>
+        <option value="3">Neither Agree nor Disagree</option>
+        <option value="2">Disagree</option>
+        <option value="1">Strongly Disagree</option>
+    </select>
+    <br /><br />
+
+    <label>Cartoon Network was/is better than Disney Channel</label><br />
+    <select id="q5">
+        <option value="5">Strongly Agree</option>
+        <option value="4">Agree</option>
+        <option value="3">Neither Agree nor Disagree</option>
+        <option value="2">Disagree</option>
+        <option value="1">Strongly Disagree</option>
+    </select>
+    <br /><br />
+
+    <br /><br /><br />
+    <button onclick="calculateCompatibility()">Calculate Compatibility</button>
+    <p id="compatibility"></p>
+
+<script>
+console.log("Launching Matchmaker Lite...")
+
+function calculateCompatibility(){
+    console.log("calculateCompatibility()")
+    
+    const DESIRED_RESPONSE = [
+    4 , //#agree
+    5 , //#strongly agree
+    1 , //#strongly disagree
+    2 , //#disagree
+    4 , //#agree
+]
+
+    const MAX_SCORE = 25
+
+    //Current Drop Down Values
+    let Question1Response = document.getElementById('q1').selectedOptions[0].value;
+    let Question2Response = document.getElementById('q2').selectedOptions[0].value;
+    let Question3Response = document.getElementById('q3').selectedOptions[0].value;
+    let Question4Response = document.getElementById('q4').selectedOptions[0].value;
+    let Question5Response = document.getElementById('q5').selectedOptions[0].value;
+
+    //log the values associated with questions in the console
+    console.log("Question 1 Answers:");
+    console.log(document.getElementById('q1').selectedOptions[0].text);
+    console.log(document.getElementById('q1').selectedOptions[0].value);
+    console.log(Question1Response);
+
+    console.log("Question 2 Answers:");
+    console.log(document.getElementById('q2').selectedOptions[0].text);
+    console.log(document.getElementById('q2').selectedOptions[0].value);
+    console.log(Question2Response);
+
+    console.log("Question 3, 4, 5 Answers:");
+    console.log(document.getElementById('q3','q4','q5').selectedOptions[0].text);
+    console.log(document.getElementById('q3','q4','q5').selectedOptions[0].value);
+    console.log(Question3Response , Question4Response, Question5Response);
+
+    //Calculate Compatibility Scores
+    let question1compatibility = 5 -Math.abs(Question1Response - DESIRED_RESPONSE[0]);
+    let question2compatibility = 5 -Math.abs(Question2Response - DESIRED_RESPONSE[1]);
+    let question3compatibility = 5 -Math.abs(Question3Response - DESIRED_RESPONSE[2]);
+    let question4compatibility = 5 -Math.abs(Question4Response - DESIRED_RESPONSE[3]);
+    let question5compatibility = 5 -Math.abs(Question5Response - DESIRED_RESPONSE[4]);
+
+    console.log('c1='+ question1compatibility);
+    console.log('c2='+ question2compatibility);
+    console.log('c3='+ question3compatibility);
+    console.log('c4='+ question4compatibility);
+    console.log('c5='+ question5compatibility);
+
+    //calculate total compatibility
+    let totalCompatibility = question1compatibility + question2compatibility + question3compatibility + question4compatibility + question5compatibility;
+
+    //percentage
+    totalCompatibility *= 100 / MAX_SCORE
+    totalCompatibility = Math.round(totalCompatibility)
+    console.log('totalCompatibility='+ totalCompatibility);
+    
+    //add in cute little smiley faces
+    let response;
+    if (totalCompatibility >= 90) {
+        response = "We should go grab a coffee and chat more!"; 
+    } else if (totalCompatibility >= 60) {
+        response = "I can see us being great friends!";
+    } else {
+        response = "I cant really see us getting along.";
+    }
+    
+    document.getElementById("compatibility").innerHTML = "Your compatibility score is:" + totalCompatibility + "<br>" + "<br>" + response;
+}
+
+</script> 
+</body>
+</html>
